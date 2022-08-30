@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+<script src="modaljquery-1.10.2.min.js"></script>
+<script src="modalbootstrap.min.js"></script>
+  <script type="text/javascript"> 
+    //Call the method on pageload
+    $(window).load(function(){
+      //Disply the modal popup
+        $('#myModal').modal('show');
+    });
+  </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Bitcoin Wallet </title>
+	<meta name="description" content="Bitcoin-Wallets.org is a simple and secure site.">
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="main.css?v=15" rel="stylesheet">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="150x150" href="img/mobileicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Jockey+One' rel='stylesheet' type='text/css'>
+    <link rel="apple-touch-icon" href="img/mobileicon.png" />
+
+    <style>
+        .container {
+            position: relative;
+        }
+    </style>
+
+</head>
+<body style="background-image: url('img/99prcnt.png'); background-color: #F7ECB5;">
+    <nav class="banner navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <a class="brand" href="/" >
+                <img src="img/logo.png" alt="" style="margin-top: -4px; width: 129px;">
+            </a>
+            
+            </a>
+
+            <div id="priceBox">
+                <div id="price"></div>
+                <div id="chartBox">
+                    <div id="chart24" style="width: 245px; height: 150px; padding: 0px; position: relative;margin:0 auto;"></div>
+                </div>
+            </div>
+
+            <div id="settings"></div>
+            <div id="info"><span class="glyphicon glyphicon-info-sign"></span></div>
+        </div>
+    </nav>
+
+    <div class="container">
+                    <div id="apiErrorBox" style="display:none">
+                    Cannot display wallet balance, the API is temporarily down.  This does NOT affect your Bitcoins or your wallet just this site's ability to display balances and transactions.  Check back in a couple of minutes, or clear your browser cache and restart.
+                    </div>
+    </div>
+    <div id="generate">
+        <section class="dark">
+            <div class="container">
+				<div id="leadTxt">Drag your finger randomly inside the box until your new Bitcoin wallet appears</div>
+
+                <div id="tapBox" class="tapBox">
+ 					<div id="code"></div>
+					<div class="ripples" class="tapBox">  
+					  <div class="ripple ripple-1" class="tapBox"></div>
+					  <div class="ripple ripple-2" class="tapBox"></div>
+					  <div class="ripple ripple-3" class="tapBox"></div>
+					</div>
+                    <div id="progressLockBox">
+                        <div id="progressFill"></div>
+                        <img src="img/progress_lock.png" alt="" id="progressLockImg" class="tapBox" width="236">
+                    </div>
+                </div>
+                <div id="createPassword" class="bg-warning">
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="createPasswordTxt">
+                        <span class="input-group-btn">
+							<button type="button" class="btn btn-success" id="createWallet"  disabled="disabled">Create Wallet</button>
+			      		</span>
+                    </div>
+                </div>
+                <div id="openPassword" class="bg-warning">
+					<div class="input-group">
+                        <input type="password" class="form-control" id="openPasswordTxt">
+                        <span class="input-group-btn">
+							<button type="button" class="btn btn-success" id="openWallet"  disabled="disabled">Open Wallet</button>
+			      		</span>
+                    </div>
+                </div>
+                <div class="alert alert-danger" id="loginError"></div>
+            </div>
+        </section>
+    </div>
+    <div id="wallet" class="container">
+    	<div id="saveURL">
+            <div>WARNING: BOOKMARK THIS PAGE TO SAVE YOUR WALLET,<br>
+            OR YOU WILL LOSE YOUR BITCOIN FOREVER!<br>
+            To Set the Transaction Fee, Click on the Settings Icon Above.</div>
+        </div>
+    	<div id="addressBox">
+    	    <div id="addressTxt">Your Bitcoin Address</div>
+    	    <span id="address"></span>
+    	</div>
+        <div id="walletInfo">
+            <div class="container">
+                <div class="">
+                    <div id="leftInfo">
+                        <div id="walletName"></div>
+                        <div class="balance">
+                            ฿<span id="btcBalance"></span>
+                        </div>
+                        <div class="currency">
+                            <span id="currencyValue">USD</span> <span id="fiatValue"></span>
+                        </div>
+                    </div>
+                    <div class="qr-link">
+                        <img src="assets/img/qr.jpg" class="qrimage smallQR">
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!--start dmn-->
+        <div id="qrvidBox">
+            <div class="container">
+                <div id="qrvideo" class="qrimage">
+                    <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
+                </div>
+            </div>
+        </div>
+        <!--end dmn-->
+        <div id="tabButtons">
+            <a class="tabButton" id="receiveBoxBtn">
+                <img src="img/receive.png" alt="" class="btnIcon"> Receive</a>
+            <a class="tabButton" id="sendBoxBtn">
+                <img src="img/send.png" alt="" class="btnIcon" id="sendIcon"> Send</a>
+            <div class="clearfix"></div>
+        </div>
+        <div id="actions">
+            <div id="receiveBox">
+                <div class="actionText">Generate a payment request</div>
+				<div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="changeType2"><span class="glyphicon glyphicon-sort"></span> <span class="addonBox2">฿</span> </span>
+                        <input class="form-control" placeholder="Amount" id="txtReceiveAmount" type="text" autocapitalize="off" autocorrect="off">
+                        <span class="input-group-btn">
+                        	<span id="fiatPrice2"></span>
+                			<a class="btn btn-success" id="generateBtn" disabled="disabled">Generate</a>				
+                        </span>
+                    </div>
+                 </div>
+            </div>
+            <div id="sendBox">
+                <div class="actionText">Send</div>
+				<div class="alert alert-warning" id="errorBox">
+					<div id="errorTxt"></div>
+				</div>
+                <div class="form-group">
+                    <div class="input-group" style="width:100%">
+                        <input type="text" class="form-control" placeholder="Enter Bitcoin Address, or Email Address, or Click Icon to Scan QR >>>>>" id="txtAddress" autocapitalize="off" autocorrect="off">
+                        <span class="input-group-addon"><a href="" id="qrlink"><span class="glyphicon glyphicon-camera" id="qrscan"></span></a></span>
+                        <div id="oneNameInfo">
+                        	<div id="oneNameName"></div>
+                        	<div id="oneNameImg"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="changeType"><span class="glyphicon glyphicon-sort"></span> <span class="addonBox">฿</span> </span>
+                        <input class="form-control" placeholder="Amount" id="txtAmount" type="text" autocapitalize="off" autocorrect="off">
+                        <span class="input-group-btn">
+                        	<span id="fiatPrice"></span>
+                			<a class="btn btn-success" id="sendBtn" >Send</a>
+                        </span>
+                    </div>
+                </div>
+			</div>
+            </div>
+        </div>
+    <div class="container" id="txList">
+        <div id="txTitle">Transaction History</div>
+        <div class="break"></div>
+        <div id="noTx">No transactions</div>
+        <div class="table-responsive" id="txBox">
+            <table class="table table-hover" id="txTable">
+                <thead>
+                    <tr id="tableHeader">
+                        <th style="border-radius:7px 0 0 7px;">Date</th>
+                        <th class="hidden-sm hidden-xs">Tx ID</th>
+                        <th class="hidden-sm hidden-xs">Confirmations</th>
+                        <th style="border-radius:0 7px 7px 0; padding-right:40px; text-align:right;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="txBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+			<div class="modal fade" id="infoModal">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-body">
+			                <div class="modalBox orangeLinks">
+			                	<div class="modalTitle">
+			                		<div class="closeModal">
+			                			<span class="glyphicon glyphicon-remove"></span>
+			                		</div>
+			                		Help and Terms of Use
+			                	</div>
+                                <div id="infoLogo"><img src="img/logo.png" alt=""></div>
+			                	<div class="infoText">This SSL secure website (see the green lock in the address bar) is provided as a simple, quick and secure Bitcoin Wallet. WARNING - YOU MUST SAVE THE URL ADDRESS OR YOU WILL LOSE YOUR BITCOINS FOREVER.</div>
+			                	<div class="infoTitle">Only You Should Have Control of Your Wallet and Bitcoins </div>
+			                	<div class="infoText">This website does not hold or have access to your Bitcoins or private keys. All information is stored on the client-side, so only you have control of your wallet and your Bitcoins.</div>
+			                	<div class="infoTitle">Your URL is Your Key, do not share the URL!</div>
+			                	<div class="infoText">Bookmark your wallet’s secret URL to access your Bitcoin wallet in the future. Please note, this is your private URL so do not share it with anyone. <b>WARNING if you lose this URL your Bitcoins will be lost forever.</b></div>
+			                	<i>Please note, all transactions sent from your wallet include a <span id='defaultFeePlaceholder'>0.00002</span> mining fee. This fee helps support the Bitcoin network and ensures your transaction goes through quickly, this wallet does not receive any part of this fee.</i>
+			                	</div>
+			                	<div class="infoTitle">Max Send Feature</div>
+			                	<div class="infoText">Type "max" or "all" in the send field to see the max amount you can send from your wallet.</div>
+								<div class="infoTitle">Bitcoin Price Indicator</div>
+			                	<div class="infoText">The Bitcoin price shown in the top header is the <a href="http://bitcoinaverage.com" target="_blank">Bitcoinaverage.com</a> price shown in USD.</div>
+			                	<div class="infoTitle">Terms of Use</div>
+			                	<div class="infoText"></a> PLEASE NOTE: This Bitcoin Wallet is not responsible for any Bitcoins that may be lost or stolen as a result of using this website. By using this website, you agree to these Terms and Conditions and you assume complete responsibility to protect your URL Bitcoin Wallet address and the private key associated with your Bitcoin wallet. This website uses the open source Bitcoin protocols and other industry standard open source tools. Learn more about Bitcoin at <a href="https://bitcoin.org" target="_blank">Bitcoin.org</a> or at <a href="https://en.wikipedia.org/wiki/Bitcoin" target="_blank">Wikipedia</a></div>
+			                </div>
+			            </div>
+			        </div>
+			        <!-- /.modal-content -->
+			    </div>
+			    <!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+	        <div class="modal fade" id="request">
+	            <div class="modal-dialog">
+	                <div class="modal-content">
+	                    <div class="modal-body">
+	                        <div class="modalBox">
+	                        	<div class="modalTitle">
+	                        		<div class="closeModal">
+	                        			<span class="glyphicon glyphicon-remove"></span>
+	                        		</div>
+	                        		Receive
+	                        	</div>
+	                        	<p>Requesting <span id="generateAmount"></span> BTC to:
+	                        	    <br>
+	                        	    <small><span id="generateAddress"></span></small>
+	                        	</p>
+	                        	<img src="assets/img/qr.jpg" class="qrimage" id="receiveQR">
+                                <br/>
+                                <div id="requestHelpText">
+                                    <p></p>
+                                </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <!-- /.modal-content -->
+	            </div>
+	            <!-- /.modal-dialog -->
+	        </div>
+	        <!-- /.modal -->
+	        <div class="modal fade" id="passwordInfoModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="modalBoxLeft">
+                                <div class="modalTitle">
+                                    <div class="closeModal">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </div>
+                                </div>
+                                <div class="orangeText"></div>
+                                <div class="blueText"></div>
+                                <div class="grayText"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <div class="modal fade" id="settingsModal">
+	            <div class="modal-dialog">
+	                <div class="modal-content">
+	                    <div class="modal-body">
+	                        <div class="modalBox">
+	                        	<div class="modalTitle">
+	                        		<div class="closeModal">
+	                        			<span class="glyphicon glyphicon-remove"></span>
+	                        		</div>
+	                        		<div id="settingsTitle">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>  
+                                        <span id="settingsTitleText">Settings</span>       
+                                    </div>
+	                        	</div>
+                                <div id="settingsChoices">
+                                    <div class="settingsChoice" id="choiceMining">
+                                        <div class="settingsChoiceIcon"></div>
+                                        <div class="settingsChoiceText">Set Transaction<br/>Mining Fee</div>
+                                    </div>
+                                    <div class="settingsChoice" id="choiceCurrency">
+                                        <div class="settingsChoiceIcon"></div>
+                                        <div class="settingsChoiceText">Set<br/>Currency</div>
+                                    </div>
+                                    <div class="settingsChoice" id="choiceExport">
+                                        <div class="settingsChoiceIcon"><span class="glyphicon glyphicon-export"></span></div>
+                                        <div class="settingsChoiceText">Export<br/> Keys</div>
+                                    </div>
+                                    <div class="settingsChoice" id="choiceSweep">
+                                        <div class="settingsChoiceIcon"><span class="glyphicon glyphicon-import"></span></div>
+                                        <div class="settingsChoiceText">Sweep<br/> Keys</div>
+                                    </div>
+                                    <div class="clearfix"></div> 
+                                    <div class="clearfix"></div> 
+                                </div>
+                                <div id="settingsCurrency">
+                                    <div class="form-group">
+                                      <label for="currencySelect">Active currency</label>
+                                      <select id="currencySelect" class="form-control">
+                                      </select>
+                                    </div>
+                                </div>
+                                <div id="importRequestBox">
+                                    <div>Import your <span class="invoiceType"></span> by entering the ID below</div>
+                                    <div id="importRequestBoxInner">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="importRequestID" placeholder="Enter ID">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-success" id="importRequestBtn"  disabled="disabled">Import</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="settingsInvoice">
+                                    <div class="orangeBox" id="newRequestMsg"></div>
+                                    <input type="hidden" value="" id="invoiceType">
+                                    <div id="invoiceCountLine">
+                                        <div id="leftCountLine"> 
+                                            Saved
+                                            <span style='color: #64657A;'>(<span id="invoiceCount">0</span>)</span>
+                                        </div>
+                                        <div id="rightCountLine">
+                                            <span class="importRequest">Import <span class="invoiceType"></span></span>
+                                            <button type="submit" class="btn btn-success" id="btnNewRequest">Create Request</button>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div id="noInvoice">
+                                        <button class="btn btn-success" id="getStarted">Create a <span class="invoiceType"></span></button>
+                                        <div class="importRequest">Import <span class="invoiceType"></span></div>
+                                    </div>
+                                    <div class="form-group" id="requestForm">
+                                        <label>Title</label>
+                                        <input type="text" class="form-control" placeholder="Title" id="txtInvoiceTitle">
+                                        <label>Amount Requested</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">฿</span>
+                                            <input class="form-control" placeholder="Amount" id="txtInvoiceAmount" type="text" autocapitalize="off" autocorrect="off">
+                                        </div>
+                                        <label><span class="invoiceType"></span> ID</label>
+                                        <input type="text" class="form-control" placeholder="Invoice ID" id="txtInvoiceID">
+                                        <div id="youtubeLinkBox">
+                                            <label>YouTube URL (optional)</label>
+                                            <input type="text" class="form-control" placeholder="Youtube Link" id="txtYoutube">
+                                        </div>
+                                        <label>Description (optional)</label>
+                                        <textarea  class="form-control" placeholder="Description" id="txtInvoiceDescription"></textarea>
+                                        <br/>
+                                        <div>
+                                            <button type="submit" class="btn btn-success" id="btnCreateInvoice" disabled="disabled" style="float:left;">Create SmartRequest</button>
+                                            <div style="" id="cancelBtn">Cancel</div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive" id="invoiceTx" style="border:0;">
+                                        <table class="table table-hover" >
+                                            <thead>
+                                                <tr id="tableHeader">
+                                                    <th style="border-radius:7px 0 0 7px;">Title</th>
+                                                    <th>Request ID</th>
+                                                    <th style="" class="hidden-sm hidden-xs" id="headerBalance"></th>
+                                                    <th style="" id="headerAmount"></th>
+                                                    <th style="border-radius:0 7px 7px 0; padding-right:40px; text-align:right;width:100px;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="invoicesBody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                 </div>
+                                <div id="settingsExport">
+                                    <div class="form-group">
+                                      <label>Brain Wallet</label>
+                                      <input type="text" class="form-control" id="txtBrain" readonly>                            
+                                      <label>Private Key</label>
+                                      <input type="text" class="form-control" id="txtPrivate" readonly>
+                                    </div>
+                                </div>
+                                <div id="settingsSweep">
+                                    <p>Sweep the funds from a private key into this wallet by entering it in WIF below.</p>
+                                    <div id="settingsSweepInner">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="settingsSweepWIF" placeholder="Enter private key in WIF">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-success" id="settingsSweepBtn" >Sweep</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="settingsMining">
+                                    <div id="settingsMiningInfo">The Bitcoin processing network requires a fee to be paid for each transaction. The fee rewards the miner that includes it in a block. You may change the fee below to alter the default mining fee. This wallet receives no part of the fee.</div>
+                                    <div class="break"></div>
+                                    <div class="miningOption">
+                                        <div class="miningOptionLeft">
+                                            <div class="settingsOption" type="normal"></div>
+                                            <div class="settingsOptionText">Normal</div>
+                                        </div>
+                                        <div class="miningOptionRight"> A fixed miner fee policy of 0.00002 BTC will be used. <span class="blueText">Recommended.</span></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="break"></div>
+                                    <div class="miningOption">
+                                        <div class="miningOptionLeft">
+                                            <div class="settingsOption" type="custom"></div>
+                                            <div class="settingsOptionText">Custom</div>
+                                        </div>
+                                        <div class="miningOptionRight">
+                                            Set a custom miner fee (per kB).
+                                            <div class="form-group" id="feeHolder">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">฿</span>
+                                                    <input class="form-control" placeholder="Miner Fee" id="txtFeeAmount" type="text" autocapitalize="off" autocorrect="off">
+                                                    <span id="fiatPriceFee"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="break"></div>
+                                </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <!-- /.modal-content -->
+	            </div>
+	            <!-- /.modal-dialog -->
+	        </div>
+	        <!-- /.modal -->
+			<div class="modal fade" id="confirmModal">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-body" id="confirmBody">
+			                <div class="modalBox" id="confirmBox">
+								<p>Confirm that you are sending</p>
+			                	<p id="confirmAmountLine"><span id="confirmAmount"></span> (BTC)</p>
+			                	<p>to the following <span id="recipientType">address</span></p>
+			                	<div id="confirmAddress"></div>
+		                	    <small><span id="generateAddress"></span></small>
+			                </div>
+								<button class="btn btn-default closeConfirm" >Cancel</button> <button class="btn btn-success" id="confirmSend">Confirm</button>
+								<div id="minerTxt">Please note, this transaction includes a <span id="txFee"></span> mining fee</div>
+			            </div>
+			        </div>
+			        <!-- /.modal-content -->
+			    </div>
+			    <!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+    <audio id="noise"></audio>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.flot.min.js"></script>
+    <script src="js/jquery.flot.time.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="bitcoinjs.min.js"></script>
+    <script src="bitcoin2.js"></script>
+    <script src="rw.js?v=16"></script>
+    <script src="app.js?v=16"></script>
+    <script src="tx.js"></script>
+    <script src="util.js"></script>
+    <script src="moment.js"></script>
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
+    <script src="qrcoderdr.js"></script>
+    <script>
+
+    </script>
+
+<script type="text/javascript">
+
+    document.getElementById('qrscan').addEventListener('click', () => {
+
+        //getVideoId();
+        decodeCode();
+    })
+
+
+//})
+</script>
+
+<script type="text/javascript">/* <![CDATA[ */(function(d,s,a,i,j,r,l,m,t){try{l=d.getElementsByTagName('a');t=d.createElement('textarea');for(i=0;l.length-i;i++){try{a=l[i].href;s=a.indexOf('/cdn-cgi/l/email-protection');m=a.length;if(a&&s>-1&&m>28){j=28+s;s='';if(j<m){r='0x'+a.substr(j,2)|0;for(j+=2;j<m&&a.charAt(j)!='X';j+=2)s+='%'+('0'+('0x'+a.substr(j,2)^r).toString(16)).slice(-2);j++;s=decodeURIComponent(s)+a.substr(j,m-j)}t.innerHTML=s.replace(/</g,'&lt;').replace(/>/g,'&gt;');l[i].href='mailto:'+t.value}}catch(e){}}}catch(e){}})(document);/* ]]> */</script>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title"><span class="auto-style1">WARNING! * Please Read *</span>
+                                            <span class="auto-style3"> </span></h4>
+                                           <!-- <h4 class="modal-title" id="myModalLabel">Modal title Here</h4> -->
+                                        </div>
+                                        <div class="modal-body">
+                                            This is a client side only Bitcoin Wallet. After your wallet is securely generated, you MUST save your custom URL or you will lose your Bitcoin forever! Do not share your secure URL with anyone!<br>
+                                            <br>
+                                            It is strongly suggested that after you create your wallet, you save the URL and return here to be certain that your wallet address is exactly the same. We do not store any URL's or history!<br>
+                                            <br>
+                                            Further, you may also want to set a custom miners transaction fee by clicking on the settings wheel icon.<br>
+                                            <br>
+                                            By clicking the Close button to continue, you agree with the Terms and Conditions found here,<br>
+                                            <a href="https://bitcoin-knowledge.com/terms.html" target="_blank">Bitcoin-Knowledge.com/terms</a>.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+                                        </div>
+
+</body>
+
+
+</html>
+
