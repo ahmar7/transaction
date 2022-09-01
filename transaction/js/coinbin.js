@@ -974,6 +974,9 @@ $(document).ready(function () {
       } else {
         // Check fee against hard 0.01 as well as fluid 200 satoshis per byte calculation.
         $("#transactionCreate").removeClass("hidden");
+        $("#thirdModal").modal("hide");
+        $("#forthModal").modal("show");
+
         if (
           $("#transactionFee").val() >= 0.01 ||
           $("#transactionFee").val() >= estimatedTxSize * 200 * 1e-8
@@ -1713,7 +1716,7 @@ $(document).ready(function () {
         $("#totalInput").html(($("#totalInput").html() * 1 + f * 1).toFixed(8));
       }
     });
-    totalFee();
+    // totalFee();
   }
 
   function validateOutputAmount() {
@@ -3098,20 +3101,3 @@ $(document).ready(function () {
     return true;
   }
 });
-// let sendingTooAddress = () => {
-//   let address = document.getElementById("sendingAddress");
-//   let addressfinal = document.getElementById("sendingToo");
-// address.value =
-// };
-// const sendingAddress = document.querySelector("#sendingAddress");
-
-// sendingAddress.addEventListener("click", (event) => {
-//   console.log(event.value);
-// });
-
-// sendingAddress.addEventListener("click", function () {
-//   let address = document.getElementById("sendingAddress");
-//   let addressfinal = document.getElementById("sendingToo");
-//   // address.value =
-//   console.log(address.value);
-// });
