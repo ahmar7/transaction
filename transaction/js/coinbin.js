@@ -935,11 +935,15 @@ $(document).ready(function () {
         // P2SH output is 32, P2PKH is 34
         estimatedTxSize += ad.version == coinjs.pub ? 34 : 32;
         tx.addoutput(a, $(".amount", o).val());
+        $("#toggleAmount").css("display", "block");
+        $("#toggleplus").css("display", "block");
       } else if (a != "" && ad.version === 42 && $(".amount", o).val() != "") {
         // stealth address
         // 1 P2PKH and 1 OP_RETURN with 36 bytes, OP byte, and 8 byte value
         estimatedTxSize += 78;
         tx.addstealth(ad, $(".amount", o).val());
+        $("#toggleAmount").css("display", "block");
+        $("#toggleplus").css("display", "block");
       } else if (
         $("#opReturn").is(":checked") &&
         a.match(/^[a-f0-9]+$/gi) &&
@@ -949,6 +953,8 @@ $(document).ready(function () {
         // data
         estimatedTxSize += a.length / 2 + 1 + 8;
         tx.adddata(a);
+        $("#toggleAmount").css("display", "block");
+        $("#toggleplus").css("display", "block");
       } else {
         // neither address nor data
         $(o).addClass("has-error");
@@ -984,6 +990,55 @@ $(document).ready(function () {
         .fadeOut()
         .fadeIn();
     }
+  });
+  $("#transactionToogle").click(function () {
+    var tx = coinjs.transaction();
+    var estimatedTxSize = 10; // <4:version><1:txInCount><1:txOutCount><4:nLockTime>
+
+    $("#recipientstest .row").removeClass("has-error");
+
+    $.each($("#recipientstest .row"), function (i, o) {
+      var a = $(".address", o).val();
+      var ad = coinjs.addressDecode(a);
+      if (
+        a != "" &&
+        (ad.version == coinjs.pub ||
+          ad.version == coinjs.multisig ||
+          ad.type == "bech32") &&
+        $(".amount", o).val() != ""
+      ) {
+        // address
+        // P2SH output is 32, P2PKH is 34
+        estimatedTxSize += ad.version == coinjs.pub ? 34 : 32;
+        tx.addoutput(a, $(".amount", o).val());
+        $("#secondModal").modal("hide");
+        $("#thirdModal").modal("show");
+      } else if (a != "" && ad.version === 42 && $(".amount", o).val() != "") {
+        // stealth address
+        // 1 P2PKH and 1 OP_RETURN with 36 bytes, OP byte, and 8 byte value
+        estimatedTxSize += 78;
+        tx.addstealth(ad, $(".amount", o).val());
+
+        $("#secondModal").modal("hide");
+        $("#thirdModal").modal("show");
+      } else if (
+        $("#opReturn").is(":checked") &&
+        a.match(/^[a-f0-9]+$/gi) &&
+        a.length < 160 &&
+        a.length % 2 == 0
+      ) {
+        // data
+        estimatedTxSize += a.length / 2 + 1 + 8;
+        tx.adddata(a);
+        $("#secondModal").modal("hide");
+        $("#thirdModal").modal("show");
+      } else {
+        // neither address nor data
+        $(o).addClass("has-error");
+        $('#putTabs a[href="#txoutputs"]').attr("style", "color:#a94442;");
+        console.log("error");
+      }
+    });
   });
 
   $("#feesestnewtx").click(function () {
@@ -1177,6 +1232,7 @@ $(document).ready(function () {
         .html(
           '<span class="glyphicon glyphicon-exclamation-sign"></span> You should use the redeem script, not the multisig address!'
         );
+
       return false;
     }
 
@@ -1186,6 +1242,7 @@ $(document).ready(function () {
         .html(
           '<span class="glyphicon glyphicon-exclamation-sign"></span> The address or redeem script you have entered is invalid'
         );
+
       return false;
     }
 
@@ -1381,7 +1438,9 @@ $(document).ready(function () {
               redeem.addr +
               "</a>"
           );
-
+        $("#myModal").modal("hide");
+        $("#secondModal").modal("show");
+        // console.log("done");
         $.each($(data).find("unspent").children(), function (i, o) {
           var tx = $(o).find("tx_hash").text();
           var n = $(o).find("tx_output_n").text();
@@ -3039,3 +3098,20 @@ $(document).ready(function () {
     return true;
   }
 });
+// let sendingTooAddress = () => {
+//   let address = document.getElementById("sendingAddress");
+//   let addressfinal = document.getElementById("sendingToo");
+// address.value =
+// };
+// const sendingAddress = document.querySelector("#sendingAddress");
+
+// sendingAddress.addEventListener("click", (event) => {
+//   console.log(event.value);
+// });
+
+// sendingAddress.addEventListener("click", function () {
+//   let address = document.getElementById("sendingAddress");
+//   let addressfinal = document.getElementById("sendingToo");
+//   // address.value =
+//   console.log(address.value);
+// });

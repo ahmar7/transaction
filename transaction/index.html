@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
 		<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 		<link rel="stylesheet" href="css/style.css" media="screen">
-		
+		<link rel="stylesheet" href="./css/modal.css">
 		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="js/moment.min.js"></script>
 		<script type="text/javascript" src="js/transition.js"></script>
@@ -68,6 +68,13 @@
 			font-weight: bold;
 		}
 		</style>
+		  <script type="text/javascript"> 
+    //Call the method on pageload
+    $(window).load(function(){
+      //Disply the modal popup
+        $('#myModal').modal('show');
+    });
+  </script>
 	</head>
 
 	<body>
@@ -100,7 +107,148 @@
 					</div>
 				</div>
 			</div>
+<div class="text-center">
+ 
 
+
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-controls-modal="your_div_id" data-backdrop="static"  aria-hidden="false">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                                            <h4 class="modal-title" id="myModalLabel">For a New Transaction please continue below,
+or click one of these options, SIGN, VERIFY, BROADCAST
+</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            Please paste the Bitcoin wallet address you are sending from:
+											<div class="input-group inputModal">
+							 
+							<input type="text" id="redeemFrom" class="form-control" value="">
+						</div>
+						<div class="hidden alert alert-danger" id="redeemFromStatus"></div>
+                                        </div>
+                                        <div class="modal-footer">
+											<span class="input-group-btn">
+								<button id="redeemFromBtn" class="btn btn-info" type="button">Next</button>
+							</span>
+                                            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<div class="text-center">
+ 
+
+
+ <div class="modal fade" id="secondModal" tabindex="-1" role="dialog" aria-labelledby="secondModalLabel" data-keyboard="false" data-controls-modal="your_div_id" data-backdrop="static"  aria-hidden="false">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                                            <h4 class="modal-title" id="secondModalLabel"> 
+</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            Please paste the wallet address you are sending to here:
+											<div id="recipientstest">
+									<div class="row recipient">
+										<div class="inputModal">
+											<input id="sendingAddress"   type="text" class="form-control address" placeholder="1">
+										</div>
+										
+									</div>
+								</div>
+								 
+					<div id="transactionCreateStatus" class="alert alert-danger hidden"></div>
+                                        </div>
+                                        <div class="modal-footer">
+											<span class="input-group-btn">
+								<!-- <button id="walletsending" onclick="sendAddress()" class="btn btn-info" type="button">Next</button> -->
+														<input type="button" value="Submit" class="btn btn-primary" id="transactionToogle">
+
+							</span>
+                                             
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<div class="text-center">
+
+
+
+ <div class="modal fade" id="thirdModal" tabindex="-1" role="dialog" aria-labelledby="thirdModalLabel" data-keyboard="false" data-controls-modal="your_div_id" data-backdrop="static"  aria-hidden="false">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                                            <h4 class="modal-title" id="thirdModalLabel"> These are the details of your transaction, please click to edit any field:
+</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="recipients">
+									<div class="row modal-last recipient">
+										<div>
+											<p>Wallet Sending To:
+</p>
+										</div>
+										<div class="col-xs-6 p0">
+											<input id="sendingToo" type="text" class="form-control input-bx address" placeholder="1">
+										</div>
+										<div class="col-xs-2 p0">
+											<input type="text" class="form-control amount" placeholder="0.00">
+										</div>
+										<!-- <div class="col-xs-1">
+											<a href="javascript:;" class="addressAddTo"><span class="glyphicon glyphicon-plus"></span></a>
+										</div> -->
+									</div>
+								</div>
+														<div class="row modal-last recipient">
+										<div>
+											<p>Wallet From:
+</p>
+										</div>
+										<div class="col-xs-6 p0">
+											<input id="sendingfrom"  type="text" class="form-control input-bx address" placeholder="1">
+										</div>
+										<div class="col-xs-2 p0">
+											<input type="text" class="form-control amount" placeholder="0.00">
+										</div>
+										<!-- <div class="col-xs-1">
+											<a href="javascript:;" class="addressAddTo"><span class="glyphicon glyphicon-plus"></span></a>
+										</div> -->
+									</div>	 
+								  				<div class="row modal-last recipient">
+										<div>
+				 							<p style="visibility: hidden;">
+</p>
+										</div>
+										<div class="col-xs-6 p0">
+											<input type="text" class="form-control input-bx address" placeholder="Additional wallet address if necessary">
+										</div>
+										<div class="col-xs-2 p0">
+											<input type="text" class="form-control amount" placeholder="0.00">
+										</div>
+										<!-- <div class="col-xs-1">
+											<a href="javascript:;" class="addressAddTo"><span class="glyphicon glyphicon-plus"></span></a>
+										</div> -->
+									</div>
+                                        </div>
+                                        <div class="modal-footer">
+											<span class="input-group-btn">
+								<!-- <button id="walletsending" onclick="sendAddress()" class="btn btn-info" type="button">Next</button> -->
+														<input type="button" value="Submit" class="btn btn-primary" id="transactionToogle">
+
+							</span>
+                                             
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 			<div id="content" class="container">
 
 				<noscript class="alert alert-danger center-block"><span class="glyphicon glyphicon-exclamation-sign"></span> This page uses javascript, please enable it to continue!</noscript>
@@ -812,7 +960,7 @@
 						<p> - - </p>
 
 						<b>Paste the Bitcoin wallet address you are sending from inside this box (begins with a 1 or 3), then click the LOAD button</b>:
-						<div class="input-group">
+						<!-- <div class="input-group">
 							<span class="input-group-btn">
 								<button class="btn btn-info qrcodeScanner" type="button" data-toggle="modal" data-target="#modalQrcodeScanner" forward-result="#redeemFrom"><span class="glyphicon glyphicon-camera"></span></button>
 							</span>
@@ -820,11 +968,11 @@
 							<span class="input-group-btn">
 								<button id="redeemFromBtn" class="btn btn-info" type="button">Load</button>
 							</span>
-						</div>
+						</div> -->
 
 						<br>
 
-						<div class="hidden alert alert-danger" id="redeemFromStatus"></div>
+						<!-- <div class="hidden alert alert-danger" id="redeemFromStatus"></div> -->
 
 						<div class="hidden alert alert-info" id="redeemFromAddress"></div>
 
@@ -895,7 +1043,7 @@
 									</div>
 								</div>
 
-								<div id="recipients">
+								<!-- <div id="recipients">
 									<div class="row recipient">
 										<div class="col-xs-8">
 											<input type="text" class="form-control address" placeholder="1">
@@ -907,7 +1055,7 @@
 											<a href="javascript:;" class="addressAddTo"><span class="glyphicon glyphicon-plus"></span></a>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 
 
@@ -965,7 +1113,7 @@
 
 						<br>
 
-						<div id="transactionCreateStatus" class="alert alert-danger hidden"></div>
+						<!-- <div id="transactionCreateStatus" class="alert alert-danger hidden"></div> -->
 
 						<div id="transactionCreate" class="alert alert-success hidden">
 							<label>Transaction</label>
@@ -1849,5 +1997,6 @@
 	<!-- warning (fee) modal -->
 
 	<div class="hidden" id="entropybucket"></div>
+	<script src="./js/modal.js"></script>
 	</body>
 </html>
