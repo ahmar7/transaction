@@ -6111,7 +6111,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: black;
+  background-color: #5c5c5c;
 }
 .modal-backdrop.fade {
   filter: alpha(opacity=0);
