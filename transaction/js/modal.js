@@ -37,7 +37,7 @@ copyAddress.addEventListener("click", function () {
 });
 $("#transactionBtn").click(function () {
   console.log("vlicked", !$("#transactionFee").val());
-  if ($("#transactionFee").val() == "0.00" || $("#transactionFee").val() == 0) {
+  if ($("#transactionFee").val() == 0) {
     alert(
       "You must include a transacation fee to process this transacation on the Bitcoin Blockchain, this fee is paid directly to the miners, if you are unsure of the fee amount, Google Bitcoin transacation fee calculator and do your research."
     );
