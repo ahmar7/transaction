@@ -2438,6 +2438,10 @@ $(document).ready(function () {
         $("#signedData textarea").val(signed);
         $("#signedData .txSize").html(t.size());
         $("#signedData").removeClass("hidden").fadeIn();
+        $("#signBtn").addClass("hidden");
+        $("#copySigned").removeClass("hidden");
+        $("#goBackBtn").removeClass("hidden");
+
       } catch (e) {
         // console.log(e);
       }

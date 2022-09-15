@@ -66,6 +66,7 @@ sendingFromAddress.addEventListener("click", function () {
 });
 
 let copyAddress = document.getElementById("copyBtn");
+let copySigned = document.getElementById("copySigned");
 
 copyAddress.addEventListener("click", function () {
   /* Get the text field */
@@ -82,6 +83,21 @@ copyAddress.addEventListener("click", function () {
   /* Alert the copied text */
   copyfunc.classList.remove("hide-it");
 });
+copySigned.addEventListener("click", function () {
+  /* Get the text field */
+  var copysignData = document.getElementById("signTarData");
+  var showSigned = document.getElementById("showSigned");
+
+  /* Select the text field */
+  copysignData.select();
+  copysignData.setSelectionRange(0, 99999); /* For mobile devices */
+
+  /* Copy the text inside the text field */
+  navigator.clipboard.writeText(copysignData.value);
+
+  /* Alert the copied text */
+  showSigned.classList.remove("hide-it");
+});
 $("#transactionBtn").click(function () {
   console.log("vlicked", !$("#transactionFee").val());
   if ($("#transactionFee").val() == 0) {
@@ -90,3 +106,16 @@ $("#transactionBtn").click(function () {
     );
   }
 });
+
+  $("#signTransactionBtn").click(function () {
+    $("#myModal").modal("hide");
+    $("#signModal").modal("show");
+  });
+  $("#verifyTransactionBtn").click(function () {
+    $("#myModal").modal("hide");
+    $("#verifyModal").modal("show");
+  });
+  $("#goBackBtn").click(function () {
+    $("#myModal").modal("show");
+    $("#signModal").modal("hide");
+  });

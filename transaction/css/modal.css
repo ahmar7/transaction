@@ -27,11 +27,17 @@
 .modal {
   top: 15% !important;
 }
+.sign-modal{
+  top: 5% !important;
 
+}
 #transactionBtn,
 #transactionToogle,
 #redeemFromBtn,
-#copyBtn {
+#copyBtn,
+#signBtn,
+#copySigned,
+#goBackBtn {
   color: #333 !important;
   background-color: #fff !important;
   border-color: #ccc !important;
@@ -39,7 +45,9 @@
   padding: 4px 20px;
   border-radius: 5px;
 }
-
+#goBackBtn{
+  margin-left: 15px;
+}
 .p0 {
   padding: 0 !important;
 }
@@ -111,6 +119,23 @@
   margin-top: -9px;
   color: #dddddd;
   opacity: 1 !important;
+}
+.pop-options{
+  text-decoration: none !important;
+}
+.modal{
+  overflow: auto !important;
+}
+.alert-sign{
+      margin-top: 10px !important;
+    margin: 0 auto !important;
+    margin-bottom: 10px !important;
+    width: 90% !important;
+}
+.p-headings{
+  margin: 0 !important;
+  margin-bottom: 5px !important;
+  text-align: left;
 }
 @media (min-width: 768px) {
   .modal-dialog {
