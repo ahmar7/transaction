@@ -1745,7 +1745,8 @@ $(document).ready(function () {
       $("#totalInput").html() * 1 -
       $("#totalOutput").html() * 1
     ).toFixed(8);
-    $("#transactionFee").val(fee > 0 ? fee : "0.00");
+    // $("#transactionFee").val("0.000200");
+    // $("#transactionFee").val(fee > 0 ? fee : "0.00");
   }
 
   $(".optionsCollapse").click(function () {

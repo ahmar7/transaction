@@ -293,7 +293,9 @@
 											   placeholder="1">
 									</div>
 									<div class="col-xs-2 p0">
-										<input type="text"
+										<input type="number"
+										   id="valuesub"
+
 											   class="form-control amount"
 											   placeholder="0.00">
 									</div>
@@ -302,6 +304,35 @@
 										   class="addressAddTo"><span class="glyphicon glyphicon-plus"></span></a>
 									</div>
 								</div>
+								<!-- Field to return the remaining balance to the inital wallet -->
+								<div class="row recipient"><br>
+									<div class="para">
+										<p>Amount to Return to Your Wallet:
+										</p>
+									</div>
+									<div class="col-xs-6 input-bx p0">
+										<input id="AddressSendingFrom"
+											   type="text"
+											   readonly
+											   class="form-control  address"
+											   placeholder="1"
+											   data-original-title=""
+											   title="">
+									</div>
+									<div class="col-xs-2 p0">
+										<input type="number"
+											   id="ReturningBalance"
+											   readonly
+											   class="form-control amount"
+											   placeholder="0.00"
+											   data-original-title=""
+											   title="">
+									</div>
+									<div class="col-xs-1 hideSh">
+										<a href="#"></a>
+									</div>
+								</div>
+								<!-- Field to return the remaining balance to the inital wallet -->
 								
 							</div>
 							<div class="row modal-last recipient">
@@ -321,7 +352,7 @@
 									id="totalInputValue"
 									readonly
 										   class="form-control amount"
-										   placeholder="0.00">
+										   placeholder="0.000000">
 								</div>
 								<div class="col-xs-1">
 									<!-- <a href="javascript:;" class="addressAddTo"><span class="glyphicon glyphicon-plus"></span></a> -->
@@ -332,7 +363,7 @@
 										 
 										 <p>Transaction Fee Paid to the Miners:</p>
 										<div class="col-xs-3 p0">
-											<input type="text" id="transactionFee" class="form-control" value="0.0000" readonly>
+											<input type="text" id="transactionFee" class="form-control" value="0.00002" >
 										</div>
 										 
 									</div>

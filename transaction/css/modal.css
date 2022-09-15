@@ -60,13 +60,19 @@
 .input-bx {
   margin-right: 10px;
 }
-.recipient .para {
-  visibility: hidden;
+.recipient .para { 
   margin: 0;
   width: 135px;
+  margin: 0 !important;
   margin-right: 10px !important;
 }
-
+.recipient .para  p{ 
+   
+  margin: 0 !important; 
+}
+.hideSh{
+  visibility: hidden !important;
+}
 .row.modal-last.recipient .para {
   display: inherit;
   visibility: visible;

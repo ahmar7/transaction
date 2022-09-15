@@ -1,21 +1,68 @@
+let sendingFromAddress = document.getElementById("redeemFromBtn");
+let transactionFee = document.getElementById("transactionFee");
+let defaultBalance = document.getElementById("totalInputValue");
 let sendingAddress = document.getElementById("transactionToogle");
-
+let AddressSendingFrom = document.getElementById("AddressSendingFrom");
+let address = document.getElementById("sendingAddress");
+let addressfinal = document.getElementById("sendingToo");
+let totalInput = document.getElementById("totalInput");
+let totalInputValue = document.getElementById("ReturningBalance");
+let inputval = document.getElementById("valuesub");
+let remainval = document.getElementById("ReturningBalance");
 sendingAddress.addEventListener("click", function () {
-  let address = document.getElementById("sendingAddress");
-  let addressfinal = document.getElementById("sendingToo");
-  let totalInput = document.getElementById("totalInput");
-  let totalInputValue = document.getElementById("totalInputValue");
-  totalInputValue.value = totalInput.innerHTML;
-
+  totalInputValue.value = totalInput.innerHTML - transactionFee.value; 
+  defaultBalance.value = totalInput.innerHTML - transactionFee.value;
   addressfinal.value = address.value;
 });
+ 
+$(document).on("input", "#valuesub", function () {
+  var fee = (
+    totalInput.innerHTML * 1 -
+    inputval.value * 1 -
+    transactionFee.value*1
+  ).toFixed(8); 
+  if(fee>0){
 
-let sendingFromAddress = document.getElementById("redeemFromBtn");
+    remainval.value = fee;
+  }else{
+    
+    remainval.value = "0.00";
+  } 
+  var fee2 = (
+    totalInput.innerHTML * 1 -
+    inputval.value * 1 -
+    transactionFee.value * 1 -
+    totalInputValue.value * 1
+  ).toFixed(8);  
+ 
+  if(fee2>0){
+
+    defaultBalance.value = fee2;
+  }else{
+    
+    defaultBalance.value = "0.000000";
+  } 
+
+});
+$(document).on("input", "#transactionFee", function () {
+  var tfee = (
+    totalInput.innerHTML * 1 -
+    inputval.value * 1 -
+    transactionFee.value*1
+  ).toFixed(8);
+  if (tfee > 0) {
+    remainval.value = tfee;
+  } else {
+    remainval.value = "0.00";
+  }  
+});
+
 
 sendingFromAddress.addEventListener("click", function () {
   let addressFrom = document.getElementById("redeemFrom");
   let addressFromFinal = document.getElementById("sendingfrom");
   addressFromFinal.value = addressFrom.value;
+  AddressSendingFrom.value = addressFrom.value;
 });
 
 let copyAddress = document.getElementById("copyBtn");
