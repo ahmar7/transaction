@@ -37,13 +37,18 @@
 #copyBtn,
 #signBtn,
 #copySigned,
-#goBackBtn {
+#goBackBtn ,
+#verifyBtn,
+#goBackverify{
   color: #333 !important;
   background-color: #fff !important;
   border-color: #ccc !important;
   outline: none !important;
   padding: 4px 20px;
   border-radius: 5px;
+}
+#verifyBtn{
+  text-align: center;
 }
 #goBackBtn{
   margin-left: 15px;
@@ -136,6 +141,28 @@
   margin: 0 !important;
   margin-bottom: 5px !important;
   text-align: left;
+}
+.table-hover > tbody > tr:hover {
+    background-color: transparent !important;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: transparent !important;
+}
+.table.table-striped .col-xs-1{
+  padding-top: 16px !important;
+}
+.glyphicon.glyphicon-ok-circle,
+.glyphicon.glyphicon-remove-circle{
+margin-left: 20px;
+margin-top: 2px;
+}
+.table > tbody > tr > td, .bor-col {
+  
+  border-top: 1px solid #4c4d64 !important;
+}
+.table.table-striped.table-hover.outs
+{
+  margin-bottom: 0 !important;
 }
 @media (min-width: 768px) {
   .modal-dialog {

@@ -1462,7 +1462,8 @@ dd {
 abbr[data-original-title],
 abbr[title] {
   cursor: help;
-  border-bottom: 1px dotted #777;
+  border-bottom: none;
+  text-decoration: none;
 }
 .initialism {
   font-size: 90%;

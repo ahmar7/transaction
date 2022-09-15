@@ -115,6 +115,10 @@ $("#transactionBtn").click(function () {
     $("#myModal").modal("hide");
     $("#verifyModal").modal("show");
   });
+  $("#goBackverify").click(function () {
+    $("#myModal").modal("show");
+    $("#verifyModal").modal("hide");
+  });
   $("#goBackBtn").click(function () {
     $("#myModal").modal("show");
     $("#signModal").modal("hide");

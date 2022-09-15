@@ -2061,6 +2061,7 @@ $(document).ready(function () {
           if (!decodePubKey()) {
             if (!decodeHDaddress()) {
               $("#verifyStatus").removeClass("hidden").fadeOut().fadeIn();
+
             }
           }
         }
@@ -2142,6 +2143,9 @@ $(document).ready(function () {
         $("#verifyTransactionData .transactionSegWit").show();
       }
       $("#verifyTransactionData").removeClass("hidden");
+                      $("#verifyBtn").addClass("hidden"); 
+                      $("#goBackverify").removeClass("hidden"); 
+
       $("#verifyTransactionData tbody").html("");
 
       var h = "";
